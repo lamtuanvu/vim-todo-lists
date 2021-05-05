@@ -24,6 +24,11 @@
 " Initializes plugin settings and mappings
 function! VimTodoListsInit()
   set filetype=todo
+  
+  " Toggles key
+  if !exists('g:VimTodoListsDefaultToogleKey')
+    let g:VimTodoListsDefaultToogleKey = '<Space>'
+  endif
 
   " Keep the same indent as on the current line or always makes a root item
   if !exists('g:VimTodoListsKeepSameIndent')
@@ -355,8 +360,8 @@ function! VimTodoListsSetNormalMode()
   nunmap <buffer> k
   iunmap <buffer> <CR>
   iunmap <buffer> <kEnter>
-  nnoremap <buffer><silent> <Space> :VimTodoListsToggleItem<CR>
-  vnoremap <buffer><silent> <Space> :'<,'>VimTodoListsToggleItem<CR>
+  nnoremap <buffer><silent> g:VimTodoListsDefaultToogleKey :VimTodoListsToggleItem<CR>
+  vnoremap <buffer><silent> g:VimTodoListsDefaultToogleKey :'<,'>VimTodoListsToggleItem<CR>
   noremap <buffer><silent> <leader>e :silent call VimTodoListsSetItemMode()<CR>
 endfunction
 
@@ -367,8 +372,8 @@ function! VimTodoListsSetItemMode()
   nnoremap <buffer><silent> O :VimTodoListsCreateNewItemAbove<CR>
   nnoremap <buffer><silent> j :VimTodoListsGoToNextItem<CR>
   nnoremap <buffer><silent> k :VimTodoListsGoToPreviousItem<CR>
-  nnoremap <buffer><silent> <Space> :VimTodoListsToggleItem<CR>
-  vnoremap <buffer><silent> <Space> :VimTodoListsToggleItem<CR>
+  nnoremap <buffer><silent> g:VimTodoListsDefaultToogleKey :VimTodoListsToggleItem<CR>
+  vnoremap <buffer><silent> g:VimTodoListsDefaultToogleKey :VimTodoListsToggleItem<CR>
   inoremap <buffer><silent> <CR> <ESC>:call VimTodoListsAppendDate()<CR>:silent call VimTodoListsCreateNewItemBelow()<CR>
   inoremap <buffer><silent> <kEnter> <ESC>:call VimTodoListsAppendDate()<CR>A<CR><ESC>:VimTodoListsCreateNewItem<CR>
   noremap <buffer><silent> <leader>e :silent call VimTodoListsSetNormalMode()<CR>
